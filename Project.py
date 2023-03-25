@@ -9,6 +9,106 @@ database = mysql.connector.connect(
 ) 
 cursor = database.cursor()
 
+
+def menu_rangking():
+    def show_data_tambah():
+        # perintah sql untuk menampilkan data id_user,username,dan nilai
+        # kolom database harus bernama sesuai bab
+        sql = 'SELECT id_user,username,nilai_pertambahan FROM data'
+        cursor.execute(sql)
+        score = cursor.fetchall()
+
+        # untuk mengcek apakah ada data atau tidak
+        if cursor.rowcount < 0:
+            print("Data Tidak Ada")
+        else:
+            for nilai in score:
+                print(nilai)
+
+        confirm = input("Press [enter] untuk kembali ")
+        os.system('cls')
+        rangking()
+
+    def show_data_kurang():
+        # perintah sql untuk menampilkan data id_user,username,dan nilai
+        # kolom database harus bernama sesuai bab
+        sql = 'SELECT id_user,username,nilai_pengurangan FROM data'
+        cursor.execute(sql)
+        score = cursor.fetchall()
+
+        # untuk mengcek apakah ada data atau tidak
+        if cursor.rowcount < 0:
+            print("Data Tidak Ada")
+        else:
+            for nilai in score:
+                print(nilai)
+
+        confirm = input("Press [enter] untuk kembali ")
+        os.system('cls')
+        rangking()
+
+    def show_data_kali():
+        # perintah sql untuk menampilkan data id_user,username,dan nilai
+        # kolom database harus bernama sesuai bab
+        sql = 'SELECT id_user,username,nilai_perkalian FROM data'
+        cursor.execute(sql)
+        score = cursor.fetchall()
+
+        # untuk mengcek apakah ada data atau tidak
+        if cursor.rowcount < 0:
+            print("Data Tidak Ada")
+        else:
+            for nilai in score:
+                print(nilai)
+
+        confirm = input("Press [enter] untuk kembali ")
+        os.system('cls')
+        rangking()
+
+    def show_data_bagi():
+        # perintah sql untuk menampilkan data id_user,username,dan nilai
+        # kolom database harus bernama sesuai bab
+        sql = 'SELECT id_user,username,nilai_pembagian FROM data'
+        cursor.execute(sql)
+        score = cursor.fetchall()
+
+        # untuk mengcek apakah ada data atau tidak
+        if cursor.rowcount < 0:
+            print("Data Tidak Ada")
+        else:
+            for nilai in score:
+                print(nilai)
+
+        confirm = input("Press [enter] untuk kembali ")
+        os.system('cls')
+        rangking()
+
+    def rangking():
+        print("""
+            1.Pertambahan
+            2.Pengurangan
+            3.Perkalian
+            4.Pembagian
+            5.Kembali
+        """)
+        pilihan_user = int(input("Pilih Menu : "))
+        if (pilihan_user == 1):
+            show_data_tambah()
+        elif (pilihan_user == 2):
+            show_data_kurang()
+        elif (pilihan_user == 3):
+            show_data_kali()
+        elif (pilihan_user == 4):
+            show_data_bagi()
+        elif (pilihan_user == 5):
+            menu_utama()
+        else:
+            print("Inputan anda salah")
+            confirm = input("Tekan [enter] untuk melanjutkan ")
+            os.system('cls')
+            rangking()
+    rangking()
+
 def menu_soal():
 
     def soal_penjumlahan():
@@ -424,8 +524,7 @@ def menu_utama():
     elif (pilihan_user == 2):
         menu_soal()
     elif (pilihan_user == 3):
-        # menu_rangking()
-        print(".")
+        menu_rangking()
     elif (pilihan_user == 4):
         print("Terima Kasih :)")
     else:
