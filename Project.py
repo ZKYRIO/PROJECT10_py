@@ -48,7 +48,15 @@ def menu_profile():
         cursor.execute(sql_show)
         show_data = cursor.fetchall()
         for data in show_data:
-            print(data)
+            id_     = data[0]
+            usn     = data[1]
+            name    = data[2]
+            sex     = data[3]
+            sch     = data[4]
+            print(" ")
+            print("[    Id_User     |    Username    |    Name    |    Gender   |    Jenjang   |]")
+            print("|      {}                {}            {}           {}            {}         |")
+            print(" ")
 
         # inputan user untuk data update
         id_user = int(input("Masukkan id_user anda : "))
@@ -65,6 +73,45 @@ def menu_profile():
         os.system('cls')
         print("="*40)
         print("=", "Data berhasil di update ✅".center(35), "=")
+        print("="*40)
+        print(" ")
+        confirm = input("Tekan[enter] untuk kembali")
+        os.system('cls')
+        menu()
+
+    def delete_data():
+
+        # perintah sql untuk menampilkan id_user, username, nama, gender, jenjang
+        sql_show = 'SELECT id_user,username, nama, gender, jenjang FROM data'
+        cursor.execute(sql_show)
+        show_data = cursor.fetchall()
+        for data in show_data:
+            id_     = data[0]
+            usn     = data[1]
+            name    = data[2]
+            sex     = data[3]
+            sch     = data[4]
+            print(" ")
+            print("[    Id_User     |    Username    |    Name    |    Gender   |    Jenjang   |]")
+            print("|      {}                {}            {}           {}            {}         |")
+            print(" ")
+
+        # perintah sql untuk menghapus data
+        id_user = int(input("Masukkan id user anda : "))
+        sql_del = 'DELETE FROM data WHERE id_user=%s'
+        val_del = (id_user, )
+        cursor.execute(sql_del,val_del)
+        
+        # perintah sql untuk mengurutkan id_user secara otomatis
+        sql_urut = 'ALTER TABLE data DROP id_user'
+        cursor.execute(sql_urut)
+        sql_urut2 = 'ALTER TABLE data ADD id_user INT(11) PRIMARY KEY AUTO_INCREMENT FIRST, ADD KEY(id_user)'
+        cursor.execute(sql_urut2)
+        database.commit()
+
+        os.system('cls')
+        print("="*40)
+        print("=", "Data berhasil di hapus ✅".center(35), "=")
         print("="*40)
         print(" ")
         confirm = input("Tekan[enter] untuk kembali")
@@ -118,7 +165,8 @@ def menu_profile():
         print("""
         1. Search
         2. Update
-        3. Kembali
+        3. Delete
+        4. Kembali
         """)
         pilihan_user = int(input("Pilih : "))
         if (pilihan_user == 1):
@@ -126,6 +174,8 @@ def menu_profile():
         elif (pilihan_user == 2):
             update_data()
         elif (pilihan_user == 3):
+            delete_data()
+        elif (pilihan_user == 4):
             menu()
         else:
             print("Inputan anda salah")
