@@ -126,10 +126,10 @@ def menu_profile():
         print("="*40)
         print(" ")
 
-        username = str.capitalize(input("Masukkan Username Anda : "))
+        username = input("Masukkan Username Anda : ")
         nama = str.capitalize(input("Masukkan Nama Anda : "))
-        sex = str.capitalize(input("(Laki - laki) / (Perempuan) : "))
-        school = str.capitalize(input("Jenjang Sekolah (TK / SD) : "))
+        sex = str.capitalize(input("(Pria / Wanita) : "))
+        school = str.upper(input("Jenjang Sekolah (TK / SD) : "))
         
         # menyimpan sign up user ke database
         def confirm():
