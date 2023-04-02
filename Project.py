@@ -211,7 +211,7 @@ def menu_rangking():
     def show_data_tambah():
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nilai_pertambahan FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pertambahan FROM data'
         cursor.execute(sql)
         score = cursor.fetchall()
 
@@ -220,7 +220,15 @@ def menu_rangking():
             print("Data Tidak Ada")
         else:
             for nilai in score:
-                print(nilai)
+                id_user = nilai[0]
+                usn     = nilai[1]
+                nama    = nilai[2]
+                nil     = nilai[3]
+                print(" ")
+                print("[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
+                print("|    {}          {}              {}                  {}          |")
+                print(" ")
+
 
         confirm = input("Press [enter] untuk kembali ")
         os.system('cls')
@@ -229,7 +237,7 @@ def menu_rangking():
     def show_data_kurang():
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nilai_pengurangan FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pengurangan FROM data'
         cursor.execute(sql)
         score = cursor.fetchall()
 
@@ -238,7 +246,16 @@ def menu_rangking():
             print("Data Tidak Ada")
         else:
             for nilai in score:
-                print(nilai)
+                id_user = nilai[0]
+                usn = nilai[1]
+                nama = nilai[2]
+                nil = nilai[3]
+                print(" ")
+                print(
+                    "[  Id User  |    Username    |   Nama   |    Nilai Pengurangan   ]")
+                print(
+                    "|    {}          {}              {}                  {}          |")
+                print(" ")
 
         confirm = input("Press [enter] untuk kembali ")
         os.system('cls')
@@ -247,7 +264,7 @@ def menu_rangking():
     def show_data_kali():
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nilai_perkalian FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_perkalian FROM data'
         cursor.execute(sql)
         score = cursor.fetchall()
 
@@ -256,7 +273,16 @@ def menu_rangking():
             print("Data Tidak Ada")
         else:
             for nilai in score:
-                print(nilai)
+                id_user = nilai[0]
+                usn = nilai[1]
+                nama = nilai[2]
+                nil = nilai[3]
+                print(" ")
+                print(
+                    "[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
+                print(
+                    "|    {}          {}              {}                  {}          |")
+                print(" ")
 
         confirm = input("Press [enter] untuk kembali ")
         os.system('cls')
@@ -265,7 +291,7 @@ def menu_rangking():
     def show_data_bagi():
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nilai_pembagian FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pembagian FROM data'
         cursor.execute(sql)
         score = cursor.fetchall()
 
@@ -274,7 +300,16 @@ def menu_rangking():
             print("Data Tidak Ada")
         else:
             for nilai in score:
-                print(nilai)
+                id_user = nilai[0]
+                usn = nilai[1]
+                nama = nilai[2]
+                nil = nilai[3]
+                print(" ")
+                print(
+                    "[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
+                print(
+                    "|    {}          {}              {}                  {}          |")
+                print(" ")
 
         confirm = input("Press [enter] untuk kembali ")
         os.system('cls')
@@ -310,9 +345,9 @@ def menu_rangking():
 def menu_soal():
     os.system('cls')
     def soal_penjumlahan():
-        d_soal = []  # untuk menyimpan sementara soal dari bank soal database
+        d_soal = []  # untuk menyimpan sementara soal dari bank soal di database
         d_No = []  # untuk menyimpan no soal
-        d_jawabUser = []  # untuk menyimpan sementara jawaban user untuk di koreksi
+        d_jawabUser = []  # untuk menyimpan sementara jawaban user dan untuk di koreksi
         d_benar = []  # untuk menyimpan banyaknya soal yang benar
         d_salah = []  # untuk menyimpan banyaknya soal yang salah
 
