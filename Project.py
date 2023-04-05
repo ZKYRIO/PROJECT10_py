@@ -6,64 +6,75 @@ database = mysql.connector.connect(
     user="root",
     password="",
     database="kids_math"
-) 
+)
 cursor = database.cursor()
 
 def menu_profile():
     os.system('cls')
     def search_data():
         os.system('cls')
-        print("="*40)
-        print("=", "CARI DATA".center(36), "=")
-        print("="*40)
-        print(" ")
-        key = input("Kata kunci nama depan anda : ")
+        print("—"*45)
+        print("╎               SEARCH DATA                 ╎")
+        print("—"*45)
+        key = input("| Kata kunci nama depan anda : ")
         sql_search = "SELECT id_user,username,nama,gender,jenjang FROM data WHERE nama LIKE %s"
         val_search = ("{}%".format(key), )
         cursor.execute(sql_search, val_search)
         show_data = cursor.fetchall()
 
-        print(" "*20)
-        if cursor.rowcount < 0:
-            print("Data tidak ditemukan")
+        if (show_data == []) :
+            print("—"*45)
+            print("|            Data tidak ditemukan           |")
         else:
+            print("—"*45)
             for data in show_data:
-                print(data)
-        print(" "*20)
-
-        confirm = input("Tekan[enter] untuk kembali ")
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                sex = data[3]
+                sch = data[4]
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print("| Gender     = {}".format(sex))
+                print("| Jenjang    = {}".format(sch))
+        print("—"*45)
+        confirm = input("| Tekan[enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def update_data():
         # header
         os.system('cls')
-        print("="*40)
-        print("=", "UPDATE DATA".center(36), "=")
-        print("="*40)
-        print(" ")
+        print("—"*45)
+        print("╎               UPDATE DATA                 ╎")
+        print("—"*45)
 
         # perintah sql untuk menampilkan id_user, username, nama, gender, jenjang
         sql_show = 'SELECT id_user,username, nama, gender, jenjang FROM data'
         cursor.execute(sql_show)
         show_data = cursor.fetchall()
         for data in show_data:
-            id_     = data[0]
-            usn     = data[1]
-            name    = data[2]
-            sex     = data[3]
-            sch     = data[4]
+            id_ = data[0]
+            usn = data[1]
+            name = data[2]
+            sex = data[3]
+            sch = data[4]
             print(" ")
-            print("[    Id_User     |    Username    |    Name    |    Gender   |    Jenjang   |]")
-            print("|      {}                {}            {}           {}            {}         |")
+            print("| Id User    = {}".format(id_))
+            print("| Username   = {}".format(usn))
+            print("| Nama       = {}".format(name))
+            print("| Gender     = {}".format(sex))
+            print("| Jenjang    = {}".format(sch))
             print(" ")
 
         # inputan user untuk data update
-        id_user = int(input("Masukkan id_user anda : "))
-        usn = input("Masukkan username baru anda : ")
-        nama = input("Masukkan nama baru anda : ")
-        gender = input("Masukkan jenis kelamin anda (L / P) : ")
-        school = input("Masukkan jenjang sekolah anda (TK / SD) : ")
+        print("—"*45)
+        id_user = int(input("| Masukkan id_user anda : "))
+        usn = input("| Masukkan username baru anda : ")
+        nama = input("| Masukkan nama baru anda : ")
+        gender = input("| Masukkan jenis kelamin anda (Pria / Wanita) : ")
+        school = input("| Masukkan jenjang sekolah anda (TK / SD) : ")
 
         # perintah sql untuk mengupdate data
         sql_update = 'UPDATE data SET username=%s , nama=%s, gender=%s, jenjang=%s WHERE id_user=%s'
@@ -71,69 +82,83 @@ def menu_profile():
         cursor.execute(sql_update, val_update)
         database.commit()
         os.system('cls')
-        print("="*40)
-        print("=", "Data berhasil di update ✅".center(35), "=")
-        print("="*40)
-        print(" ")
-        confirm = input("Tekan[enter] untuk kembali")
+        print("="*45)
+        print("|         Data berhasil diupdate ✅         |")
+        print("="*45)
+        confirm = input("| Tekan[enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def delete_data():
-
+        os.system('cls')
+        print("—"*45)
+        print("╎               DELETE DATA                ╎")
+        print("—"*45)
         # perintah sql untuk menampilkan id_user, username, nama, gender, jenjang
         sql_show = 'SELECT id_user,username, nama, gender, jenjang FROM data'
         cursor.execute(sql_show)
         show_data = cursor.fetchall()
         for data in show_data:
-            id_     = data[0]
-            usn     = data[1]
-            name    = data[2]
-            sex     = data[3]
-            sch     = data[4]
+            id_ = data[0]
+            usn = data[1]
+            name = data[2]
+            sex = data[3]
+            sch = data[4]
             print(" ")
-            print("[    Id_User     |    Username    |    Name    |    Gender   |    Jenjang   |]")
-            print("|      {}                {}            {}           {}            {}         |")
+            print("| Id User    = {}".format(id_))
+            print("| Username   = {}".format(usn))
+            print("| Nama       = {}".format(name))
+            print("| Gender     = {}".format(sex))
+            print("| Jenjang    = {}".format(sch))
             print(" ")
 
         # perintah sql untuk menghapus data
-        id_user = int(input("Masukkan id user anda : "))
-        sql_del = 'DELETE FROM data WHERE id_user=%s'
-        val_del = (id_user, )
-        cursor.execute(sql_del,val_del)
-        
-        # perintah sql untuk mengurutkan id_user secara otomatis
-        sql_urut = 'ALTER TABLE data DROP id_user'
-        cursor.execute(sql_urut)
-        sql_urut2 = 'ALTER TABLE data ADD id_user INT(11) PRIMARY KEY AUTO_INCREMENT FIRST, ADD KEY(id_user)'
-        cursor.execute(sql_urut2)
-        database.commit()
+        if (show_data == []):
+            os.system('cls')
+            print("="*45)
+            print("|               Tidak Ada Data              |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            os.system('cls')
+            menu()
+            
+        else :
+            print("—"*45)
+            id_user = int(input("| Masukkan id user anda : "))
+            sql_del = 'DELETE FROM data WHERE id_user=%s'
+            val_del = (id_user, )
+            cursor.execute(sql_del, val_del)
 
-        os.system('cls')
-        print("="*40)
-        print("=", "Data berhasil di hapus ✅".center(35), "=")
-        print("="*40)
-        print(" ")
-        confirm = input("Tekan[enter] untuk kembali")
-        os.system('cls')
-        menu()
+            # perintah sql untuk mengurutkan id_user secara otomatis
+            sql_urut = 'ALTER TABLE data DROP id_user'
+            cursor.execute(sql_urut)
+            sql_urut2 = 'ALTER TABLE data ADD id_user INT(11) PRIMARY KEY AUTO_INCREMENT FIRST, ADD KEY(id_user)'
+            cursor.execute(sql_urut2)
+            database.commit()
+
+            os.system('cls')
+            print("="*45)
+            print("|        Data berhasil tersimpan ✅         |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            os.system('cls')
+            menu()
 
     def Daftar():
         # header
         os.system('cls')
-        print("="*40)
-        print("=", "Daftar / Login".center(36), "=")
-        print("="*40)
-        print(" ")
+        print("—"*45)
+        print("╎              DAFTAR / LOGIN               ╎")
+        print("—"*45)
+        username = input("| Masukkan Username Anda : ")
+        nama = str.capitalize(input("| Masukkan Nama Anda : "))
+        sex = str.capitalize(input("| Masukkan jenis kelamin anda (Pria / Wanita) : "))
+        school = str.upper(input("| Jenjang Sekolah (TK / SD) : "))
+        print("—"*45)
 
-        username = input("Masukkan Username Anda : ")
-        nama = str.capitalize(input("Masukkan Nama Anda : "))
-        sex = str.capitalize(input("(Pria / Wanita) : "))
-        school = str.upper(input("Jenjang Sekolah (TK / SD) : "))
-        
         # menyimpan sign up user ke database
         def confirm():
-            confirm = input("Apakah anda yakin (iya / tidak) : ")
+            confirm = input("| Apakah anda yakin (iya / tidak) : ")
             if (confirm == "tidak" or confirm == "TIDAK" or confirm == "Tidak"):
                 Daftar()
             elif (confirm == "iya" or confirm == "IYA" or confirm == "Iya"):
@@ -142,16 +167,15 @@ def menu_profile():
                 val_insert = (username, nama, sex, school)
                 cursor.execute(sql_insert, val_insert)
                 database.commit()
-            else :
-                print("Inputan anda salah, silahkan input kembali")
+            else:
+                print("| Inputan anda salah, silahkan input kembali |")
                 confirm()
 
             os.system('cls')
-            print("="*40)
-            print("=", "Data berhasil tersimpan ✅".center(35), "=")
-            print("="*40)
-            print(" ")
-            confirm = input("Tekan[enter] untuk kembali")
+            print("="*45)
+            print("|        Data berhasil tersimpan ✅         |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
             os.system('cls')
             menu()
         confirm()
@@ -159,16 +183,14 @@ def menu_profile():
     def Data_diri():
         # header
         os.system('cls')
-        print("="*40)
-        print("=", "Profile".center(36), "=")
-        print("="*40)
-        print("""
-        1. Search
-        2. Update
-        3. Delete
-        4. Kembali
-        """)
-        pilihan_user = int(input("Pilih : "))
+        print("—"*50)
+        print("╎                   DATA DIRI                    ╎")
+        print("—"*50)
+        print("|                                                |")
+        print("|   1.Search | 2.Update | 3.Delete | 4.Kembali   |")
+        print("|                                                |")
+        print("—"*50)
+        pilihan_user = int(input("| Pilih : "))
         if (pilihan_user == 1):
             search_data()
         elif (pilihan_user == 2):
@@ -184,15 +206,14 @@ def menu_profile():
     def menu():
         os.system('cls')
         # header
-        print("="*40)
-        print("=", "Menu Profile".center(36), "=")
-        print("="*40)
-        print("""
-        1. Daftar
-        2. Data diri
-        3. Kembali
-        """)
-        pilihan_user = int(input("Pilih menu : "))
+        print("—"*45)
+        print("╎               MENU PROFILE                ╎")
+        print("—"*45)
+        print("|                                           |")
+        print("|    1. Daftar | 2.Data Diri | 3.Kembali    |")
+        print("|                                           |")
+        print("—"*45)
+        pilihan_user = int(input("| Pilih menu : "))
         if (pilihan_user == 1):
             # menu_daftar()
             Daftar()
@@ -208,123 +229,149 @@ def menu_profile():
 
 def menu_rangking():
     os.system('cls')
+
     def show_data_tambah():
+        os.system('cls')
+        print("—"*45)
+        print("╎           RANGKING PENJUMLAHAN            ╎")
+        print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
         sql = 'SELECT id_user,username,nama,nilai_pertambahan FROM data'
         cursor.execute(sql)
-        score = cursor.fetchall()
+        show_data = cursor.fetchall()
 
         # untuk mengcek apakah ada data atau tidak
         if cursor.rowcount < 0:
             print("Data Tidak Ada")
         else:
-            for nilai in score:
-                id_user = nilai[0]
-                usn     = nilai[1]
-                nama    = nilai[2]
-                nil     = nilai[3]
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                nilai = data[3]
                 print(" ")
-                print("[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
-                print("|    {}          {}              {}                  {}          |")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print("| Nilai (+)  = {}".format(nilai))
                 print(" ")
 
-
-        confirm = input("Press [enter] untuk kembali ")
+        print("—"*45)
+        confirm = input("| Tekan [enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def show_data_kurang():
+        os.system('cls')
+        print("—"*45)
+        print("╎           RANGKING PENGURANGAN            ╎")
+        print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
         sql = 'SELECT id_user,username,nama,nilai_pengurangan FROM data'
         cursor.execute(sql)
-        score = cursor.fetchall()
+        show_data = cursor.fetchall()
 
         # untuk mengcek apakah ada data atau tidak
         if cursor.rowcount < 0:
             print("Data Tidak Ada")
         else:
-            for nilai in score:
-                id_user = nilai[0]
-                usn = nilai[1]
-                nama = nilai[2]
-                nil = nilai[3]
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                nilai = data[3]
                 print(" ")
-                print(
-                    "[  Id User  |    Username    |   Nama   |    Nilai Pengurangan   ]")
-                print(
-                    "|    {}          {}              {}                  {}          |")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print("| Nilai (-)  = {}".format(nilai))
                 print(" ")
 
-        confirm = input("Press [enter] untuk kembali ")
+        print("—"*45)
+        confirm = input("| Tekan [enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def show_data_kali():
+        os.system('cls')
+        print("—"*45)
+        print("╎            RANGKING PERKALIAN             ╎")
+        print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
         sql = 'SELECT id_user,username,nama,nilai_perkalian FROM data'
         cursor.execute(sql)
-        score = cursor.fetchall()
+        show_data = cursor.fetchall()
 
         # untuk mengcek apakah ada data atau tidak
         if cursor.rowcount < 0:
             print("Data Tidak Ada")
         else:
-            for nilai in score:
-                id_user = nilai[0]
-                usn = nilai[1]
-                nama = nilai[2]
-                nil = nilai[3]
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                nilai = data[3]
                 print(" ")
-                print(
-                    "[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
-                print(
-                    "|    {}          {}              {}                  {}          |")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print("| Nilai (×)  = {}".format(nilai))
                 print(" ")
 
-        confirm = input("Press [enter] untuk kembali ")
+        print("—"*45)
+        confirm = input("| Tekan [enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def show_data_bagi():
+        os.system('cls')
+        print("—"*45)
+        print("╎            RANGKING PEMBAGIAN             ╎")
+        print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
         sql = 'SELECT id_user,username,nama,nilai_pembagian FROM data'
         cursor.execute(sql)
-        score = cursor.fetchall()
+        show_data = cursor.fetchall()
 
         # untuk mengcek apakah ada data atau tidak
         if cursor.rowcount < 0:
             print("Data Tidak Ada")
         else:
-            for nilai in score:
-                id_user = nilai[0]
-                usn = nilai[1]
-                nama = nilai[2]
-                nil = nilai[3]
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                nilai = data[3]
                 print(" ")
-                print(
-                    "[  Id User  |    Username    |   Nama   |    Nilai Penjumlahan   ]")
-                print(
-                    "|    {}          {}              {}                  {}          |")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print("| Nilai (÷)  = {}".format(nilai))
                 print(" ")
 
-        confirm = input("Press [enter] untuk kembali ")
+        print("—"*45)
+        confirm = input("| Tekan [enter] untuk kembali ")
         os.system('cls')
         menu()
 
     def menu():
         os.system('cls')
-        print("""
-            1.Pertambahan
-            2.Pengurangan
-            3.Perkalian
-            4.Pembagian
-            5.Kembali
-        """)
-        pilihan_user = int(input("Pilih Menu : "))
+        print("—"*45)
+        print("╎               MENU RANGKING               ╎")
+        print("—"*45)
+        print("|                                           |")
+        print("|             1.Penjumlahan  (+)            |")
+        print("|             2.Pengurangan  (-)            |")
+        print("|             3.Perkalian    (×)            |")
+        print("|             4.Pembagian    (÷)            |")
+        print("|             5.Kembali                     |")
+        print("|                                           |")
+        print("—"*45)
+        pilihan_user = int(input("| Pilih Menu : "))
         if (pilihan_user == 1):
             show_data_tambah()
         elif (pilihan_user == 2):
@@ -357,20 +404,35 @@ def menu_soal():
             # menampilkan data id_user dan username
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
-            data = cursor.fetchall()
-            print("id | username | nama")
-            for datas in data:
-                print(datas)
+            show_data = cursor.fetchall()
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                print("—"*45)
+                print("╎                  CONFIRM                  ╎")
+                print("—"*45)
+                print(" ")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print(" ")
 
-            id_user = int(input("Masukkan ID User Anda : "))
+            print("—"*45)
+            id_user = int(input("| Masukkan ID User Anda : "))
             # kolom nilai (n_...) disesuaikan dengan bab nya
             sql_update = 'UPDATE data SET nilai_pertambahan=%s WHERE id_user =%s '
             val_update = (score, id_user)
             cursor.execute(sql_update, val_update)
             database.commit()
-            print("Nilai berhasil tersimpan ✅")
-            os.system('cls')
-
+            print("="*45)
+            print("|                                            |")
+            print("|        Nilai berhasil tersimpan ✅         |")
+            print("|                                            |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            tampil_score()
+            
         def koreksi_soal():
             y = 0
             while y < 10:  # ganti sesuai jumlah soal
@@ -393,16 +455,23 @@ def menu_soal():
             score = len(d_benar)*10
             benar = len(d_benar)
             salah = len(d_salah)
-            print("="*40)
-            print("Soal Terjawab benar = {}".format(benar))
-            print("Soal Terjawab salah = {}".format(salah))
-            print("="*40)
-            print("Score akhir yang kamu peroleh".center(10))
-            print('{}'.format(score).center(40))
+            os.system('cls')
+            print("="*45)
+            print("|       Score akhir yang kamu peroleh       |")
+            print('|                    {}                     |'.format(score))
+            print("="*45)
+            print("| Soal Terjawab benar = {}                   |".format(benar))
+            print("| Soal Terjawab salah = {}                   |".format(salah))
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            menu()
 
         def jawab_soal(x, y):
             os.system('cls')
-            pilihan_user = int(input("{}) {} ".format(x, y)))
+            print("—"*45)
+            print("╎                PENJUMLAHAN                ╎")
+            print("—"*45)
+            pilihan_user = int(input("| {}) {} ".format(x, y)))
             d_jawabUser.append(pilihan_user)
             os.system('cls')
 
@@ -414,7 +483,7 @@ def menu_soal():
 
             # menampilkan soal dari database
             x = 0
-            while x < 10:  # ganti sesuai jumlah soal
+            while x < 10:
                 hasil = cursor.fetchone()
                 d_soal.append(hasil)
                 # print(d_soal)
@@ -422,7 +491,7 @@ def menu_soal():
 
             # menampilkan No soal
             x = 0
-            while x < 10:  # ganti sesuai jumlah soal
+            while x < 10 :  # ganti sesuai jumlah soal
                 no_soal = x+1
                 d_No.append(str(no_soal))
                 x += 1
@@ -433,10 +502,9 @@ def menu_soal():
                 for no, data in zip(d_No[x], d_soal[x]):
                     jawab_soal(no, data)
                 x += 1
+            koreksi_soal()
 
         tampil_soal()
-        koreksi_soal()
-        tampil_score()
 
     def soal_pengurangan():
         d_soal = []  # untuk menyimpan sementara soal dari bank soal database
@@ -451,19 +519,34 @@ def menu_soal():
             # menampilkan data id_user dan username
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
-            data = cursor.fetchall()
-            print("id | username | nama")
-            for datas in data:
-                print(datas)
+            show_data = cursor.fetchall()
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                print("—"*45)
+                print("╎                  CONFIRM                  ╎")
+                print("—"*45)
+                print(" ")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print(" ")
 
-            id_user = int(input("Masukkan ID User Anda : "))
+            print("—"*45)
+            id_user = int(input("| Masukkan ID User Anda : "))
             # kolom nilai (n_...) disesuaikan dengan bab nya
             sql_update = 'UPDATE data SET nilai_pengurangan=%s WHERE id_user =%s '
             val_update = (score, id_user)
             cursor.execute(sql_update, val_update)
             database.commit()
-            print("Nilai berhasil tersimpan ✅")
-            os.system('cls')
+            print("="*45)
+            print("|                                            |")
+            print("|        Nilai berhasil tersimpan ✅         |")
+            print("|                                            |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            tampil_score()
 
         def koreksi_soal():
             y = 0
@@ -487,15 +570,22 @@ def menu_soal():
             score = len(d_benar)*10
             benar = len(d_benar)
             salah = len(d_salah)
-            print("="*40)
-            print("Soal Terjawab benar = {}".format(benar))
-            print("Soal Terjawab salah = {}".format(salah))
-            print("="*40)
-            print("Score akhir yang kamu peroleh".center(10))
-            print('{}'.format(score).center(40))
+            os.system('cls')
+            print("="*45)
+            print("|       Score akhir yang kamu peroleh       |")
+            print('|                    {}                      |'.format(score))
+            print("="*45)
+            print("| Soal Terjawab benar = {}                   |".format(benar))
+            print("| Soal Terjawab salah = {}                   |".format(salah))
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            menu()
 
         def jawab_soal(x, y):
             os.system('cls')
+            print("—"*45)
+            print("╎                PENGURANGAN                ╎")
+            print("—"*45)
             pilihan_user = int(input("{}) {} ".format(x, y)))
             d_jawabUser.append(pilihan_user)
             os.system('cls')
@@ -527,10 +617,9 @@ def menu_soal():
                 for no, data in zip(d_No[x], d_soal[x]):
                     jawab_soal(no, data)
                 x += 1
+            koreksi_soal()
 
         tampil_soal()
-        koreksi_soal()
-        tampil_score()
 
     def soal_perkalian():
         d_soal = []  # untuk menyimpan sementara soal dari bank soal database
@@ -545,19 +634,34 @@ def menu_soal():
             # menampilkan data id_user dan username
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
-            data = cursor.fetchall()
-            print("id | username | nama")
-            for datas in data:
-                print(datas)
+            show_data = cursor.fetchall()
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                print("—"*45)
+                print("╎                  CONFIRM                  ╎")
+                print("—"*45)
+                print(" ")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print(" ")
 
-            id_user = int(input("Masukkan ID User Anda : "))
+            print("—"*45)
+            id_user = int(input("| Masukkan ID User Anda : "))
             # kolom nilai (n_...) disesuaikan dengan bab nya
             sql_update = 'UPDATE data SET nilai_perkalian=%s WHERE id_user =%s '
             val_update = (score, id_user)
             cursor.execute(sql_update, val_update)
             database.commit()
-            print("Nilai berhasil tersimpan ✅")
-            os.system('cls')
+            print("="*45)
+            print("|                                            |")
+            print("|        Nilai berhasil tersimpan ✅         |")
+            print("|                                            |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            tampil_score()
 
         def koreksi_soal():
             y = 0
@@ -581,15 +685,22 @@ def menu_soal():
             score = len(d_benar)*10
             benar = len(d_benar)
             salah = len(d_salah)
-            print("="*40)
-            print("Soal Terjawab benar = {}".format(benar))
-            print("Soal Terjawab salah = {}".format(salah))
-            print("="*40)
-            print("Score akhir yang kamu peroleh".center(10))
-            print('{}'.format(score).center(40))
+            os.system('cls')
+            print("="*45)
+            print("|       Score akhir yang kamu peroleh       |")
+            print('|                    {}                     |'.format(score))
+            print("="*45)
+            print("| Soal Terjawab benar = {}                   |".format(benar))
+            print("| Soal Terjawab salah = {}                   |".format(salah))
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            menu()
 
         def jawab_soal(x, y):
             os.system('cls')
+            print("—"*45)
+            print("╎                 PERKALIAN                 ╎")
+            print("—"*45)
             pilihan_user = int(input("{}) {} ".format(x, y)))
             d_jawabUser.append(pilihan_user)
             os.system('cls')
@@ -639,19 +750,34 @@ def menu_soal():
             # menampilkan data id_user dan username
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
-            data = cursor.fetchall()
-            print("id | username | nama")
-            for datas in data:
-                print(datas)
+            show_data = cursor.fetchall()
+            for data in show_data:
+                id_ = data[0]
+                usn = data[1]
+                name = data[2]
+                print("—"*45)
+                print("╎                  CONFIRM                  ╎")
+                print("—"*45)
+                print(" ")
+                print("| Id User    = {}".format(id_))
+                print("| Username   = {}".format(usn))
+                print("| Nama       = {}".format(name))
+                print(" ")
 
-            id_user = int(input("Masukkan ID User Anda : "))
+            print("—"*45)
+            id_user = int(input("| Masukkan ID User Anda : "))
             # kolom nilai (n_...) disesuaikan dengan bab nya
             sql_update = 'UPDATE data SET nilai_pembagian=%s WHERE id_user =%s '
             val_update = (score, id_user)
             cursor.execute(sql_update, val_update)
             database.commit()
-            print("Nilai berhasil tersimpan ✅")
-            os.system('cls')
+            print("="*45)
+            print("|                                            |")
+            print("|        Nilai berhasil tersimpan ✅         |")
+            print("|                                            |")
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            tampil_score()
 
         def koreksi_soal():
             y = 0
@@ -675,15 +801,22 @@ def menu_soal():
             score = len(d_benar)*10
             benar = len(d_benar)
             salah = len(d_salah)
-            print("="*40)
-            print("Soal Terjawab benar = {}".format(benar))
-            print("Soal Terjawab salah = {}".format(salah))
-            print("="*40)
-            print("Score akhir yang kamu peroleh".center(10))
-            print('{}'.format(score).center(40))
+            os.system('cls')
+            print("="*45)
+            print("|       Score akhir yang kamu peroleh       |")
+            print('|                    {}                     |'.format(score))
+            print("="*45)
+            print("| Soal Terjawab benar = {}                   |".format(benar))
+            print("| Soal Terjawab salah = {}                   |".format(salah))
+            print("="*45)
+            confirm = input("| Tekan[enter] untuk kembali ")
+            menu()
 
         def jawab_soal(x, y):
             os.system('cls')
+            print("—"*45)
+            print("╎                 PEMBAGIAN                 ╎")
+            print("—"*45)
             pilihan_user = int(input("{}) {} ".format(x, y)))
             d_jawabUser.append(pilihan_user)
             os.system('cls')
@@ -720,37 +853,46 @@ def menu_soal():
         koreksi_soal()
         tampil_score()
 
-    print("""
-        1. Penjumlahan  (+)
-        2. Pengurangan  (-)
-        3. Perkalian    (×)
-        4. Pembagian    (÷)
-        5. Kembali
-    """)
-    pilihan_user = int(input("Pilih Menu : "))
-    if (pilihan_user == 1 ):
-        soal_penjumlahan()
-    elif (pilihan_user == 2 ):
-        soal_pengurangan()
-    elif (pilihan_user == 3 ):
-        soal_perkalian()
-    elif (pilihan_user == 4 ):
-        soal_pembagian()
-    elif (pilihan_user == 5 ):
-        menu_utama()
-    else:
-        print("Inputan anda salah")
-        menu_soal()
-
+    def menu():
+        os.system('cls')
+        print("—"*45)
+        print("╎                 MENU SOAL                 ╎")
+        print("—"*45)
+        print("|                                           |")
+        print("|             1.Penjumlahan  (+)            |")
+        print("|             2.Pengurangan  (-)            |")
+        print("|             3.Perkalian    (×)            |")
+        print("|             4.Pembagian    (÷)            |")
+        print("|             5.Kembali                     |")
+        print("|                                           |")
+        print("—"*45)
+        pilihan_user = int(input("| Pilih Bab : "))
+        if (pilihan_user == 1):
+            soal_penjumlahan()
+        elif (pilihan_user == 2):
+            soal_pengurangan()
+        elif (pilihan_user == 3):
+            soal_perkalian()
+        elif (pilihan_user == 4):
+            soal_pembagian()
+        elif (pilihan_user == 5):
+            menu_utama()
+        else:
+            print("Inputan anda salah")
+            menu_soal()
+    menu()
+    
 def menu_utama():
     os.system('cls')
-    print("""
-        1. Profile
-        2. Soal
-        3. Rangking
-        4. Keluar
-    """)
-    pilihan_user = int(input("Pilih menu : "))
+    print("—"*45)
+    print("╎                 KIDS MATH                 ╎")
+    print("╎        PROGRAM BELAJAR MATEMATIKA         ╎")
+    print("—"*45)
+    print("|                                           |")
+    print("|   1. Profile | 2.Soal | 3.Rank | 4.Exit   |")
+    print("|                                           |")
+    print("—"*45)
+    pilihan_user = int(input("| Pilih menu : "))
     if (pilihan_user == 1):
         menu_profile()
     elif (pilihan_user == 2):
@@ -759,7 +901,16 @@ def menu_utama():
         menu_rangking()
     elif (pilihan_user == 4):
         os.system('cls')
-        print("Terima Kasih :)")
+        print("—"*45)
+        print("╎                 KIDS MATH                 ╎")
+        print("╎        PROGRAM BELAJAR MATEMATIKA         ╎")
+        print("—"*45)
+        print("|                                           |")
+        print("|              Terima Kasih :)              |")
+        print("|                                           |")
+        print("—"*45)
+        confirm = input("| See You Again..... ")
+        os.system('cls')
     else:
         print("Input anda salah")
         menu_utama()
