@@ -175,7 +175,7 @@ def menu_profile():
 
                 os.system('cls')
                 print("="*45)
-                print("|        Data berhasil tersimpan ✅         |")
+                print("|        Data berhasil dihapus ✅           |")
                 print("="*45)
                 confirm = input("| Tekan[enter] untuk kembali ")
                 os.system('cls')
