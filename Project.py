@@ -88,7 +88,7 @@ def menu_profile():
             # header
             os.system('cls')
             print("—"*45)
-            print("╎               UPDATE DATA                 ╎")
+            print("╎               EDIT DATA                 ╎")
             print("—"*45)
 
             # perintah sql untuk menampilkan id_user, username, nama, gender, jenjang
@@ -442,13 +442,13 @@ def menu_soal():
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
             show_data = cursor.fetchall()
+            print("—"*45)
+            print("╎                  CONFIRM                  ╎")
+            print("—"*45)
             for data in show_data:
                 id_ = data[0]
                 usn = data[1]
                 name = data[2]
-                print("—"*45)
-                print("╎                  CONFIRM                  ╎")
-                print("—"*45)
                 print(" ")
                 print("| Id User    = {}".format(id_))
                 print("| Username   = {}".format(usn))
@@ -557,13 +557,13 @@ def menu_soal():
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
             show_data = cursor.fetchall()
+            print("—"*45)
+            print("╎                  CONFIRM                  ╎")
+            print("—"*45)
             for data in show_data:
                 id_ = data[0]
                 usn = data[1]
                 name = data[2]
-                print("—"*45)
-                print("╎                  CONFIRM                  ╎")
-                print("—"*45)
                 print(" ")
                 print("| Id User    = {}".format(id_))
                 print("| Username   = {}".format(usn))
@@ -672,13 +672,13 @@ def menu_soal():
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
             show_data = cursor.fetchall()
+            print("—"*45)
+            print("╎                  CONFIRM                  ╎")
+            print("—"*45)
             for data in show_data:
                 id_ = data[0]
                 usn = data[1]
                 name = data[2]
-                print("—"*45)
-                print("╎                  CONFIRM                  ╎")
-                print("—"*45)
                 print(" ")
                 print("| Id User    = {}".format(id_))
                 print("| Username   = {}".format(usn))
@@ -787,13 +787,13 @@ def menu_soal():
             sql_show = 'SELECT id_user,username,nama FROM data'
             cursor.execute(sql_show)
             show_data = cursor.fetchall()
+            print("—"*45)
+            print("╎                  CONFIRM                  ╎")
+            print("—"*45)
             for data in show_data:
                 id_ = data[0]
                 usn = data[1]
                 name = data[2]
-                print("—"*45)
-                print("╎                  CONFIRM                  ╎")
-                print("—"*45)
                 print(" ")
                 print("| Id User    = {}".format(id_))
                 print("| Username   = {}".format(usn))
