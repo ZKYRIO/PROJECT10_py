@@ -9,6 +9,14 @@ database = mysql.connector.connect(
 )
 cursor = database.cursor()
 
+def alert():
+    os.system('cls')
+    print("—"*45)
+    print("|               !! ALERT !!                 |")
+    print("|            Input anda salah               |")
+    print("—"*45)
+    confirm = input("| Tekan [enter] untuk kembali ")
+
 def menu_profile():
     os.system('cls')
     def Daftar():
@@ -60,6 +68,7 @@ def menu_profile():
             show_data = cursor.fetchall()
 
             if (show_data == []) :
+                os.system('cls')
                 print("—"*45)
                 print("|                                           |")
                 print("|            Data tidak ditemukan           |")
@@ -82,13 +91,13 @@ def menu_profile():
             print("—"*45)
             confirm = input("| Tekan[enter] untuk kembali ")
             os.system('cls')
-            menu()
+            Data_diri()
 
-        def update_data():
+        def edit_data():
             # header
             os.system('cls')
             print("—"*45)
-            print("╎               EDIT DATA                 ╎")
+            print("╎                EDIT DATA                  ╎")
             print("—"*45)
 
             # perintah sql untuk menampilkan id_user, username, nama, gender, jenjang
@@ -128,18 +137,31 @@ def menu_profile():
                 gender = input("| Masukkan jenis kelamin anda (Pria / Wanita) : ")
                 school = input("| Masukkan jenjang sekolah anda (TK / SD) : ")
 
-                # perintah sql untuk mengupdate data
-                sql_update = 'UPDATE data SET username=%s , nama=%s, gender=%s, jenjang=%s WHERE id_user=%s'
-                val_update = (usn, nama, gender, school, id_user)
-                cursor.execute(sql_update, val_update)
-                database.commit()
-                os.system('cls')
-                print("="*45)
-                print("|         Data berhasil diupdate ✅         |")
-                print("="*45)
-                confirm = input("| Tekan[enter] untuk kembali ")
-                os.system('cls')
-                menu()
+                if (usn == "" or nama == "" or gender == ""):
+                    os.system('cls')
+                    print("—"*45)
+                    print("|               !! ALERT !!                 |")
+                    print("|           Data Tidak Lengkap              |")
+                    print("—"*45)
+                    confirm = input("| Kembali mengedit (y / n) : ")
+                    if (confirm == "y" or confirm == "Y"):
+                        edit_data()
+                    else:
+                        Data_diri()
+
+                else:
+                    # perintah sql untuk mengupdate data
+                    sql_update = 'UPDATE data SET username=%s , nama=%s, gender=%s, jenjang=%s WHERE id_user=%s'
+                    val_update = (usn, nama, gender, school, id_user)
+                    cursor.execute(sql_update, val_update)
+                    database.commit()
+                    os.system('cls')
+                    print("="*45)
+                    print("|         Data berhasil diupdate ✅         |")
+                    print("="*45)
+                    confirm = input("| Tekan[enter] untuk kembali ")
+                    os.system('cls')
+                    menu()
 
         def delete_data():
             os.system('cls')
@@ -203,25 +225,21 @@ def menu_profile():
         print("╎                   DATA DIRI                    ╎")
         print("—"*50)
         print("|                                                |")
-        print("|   1.Search | 2.Update | 3.Delete | 4.Kembali   |")
+        print("|    1.Search | 2.Edit | 3.Delete | 4.Kembali    |")
         print("|                                                |")
         print("—"*50)
-        pilihan_user = int(input("| Pilih : "))
+        pilihan_user = int(input("| Pilih ( 1 / 2 / 3 / 4 ) : "))
         if (pilihan_user == 1):
             search_data()
         elif (pilihan_user == 2):
-            update_data()
+            edit_data()
         elif (pilihan_user == 3):
             delete_data()
         elif (pilihan_user == 4):
             menu()
         else:
             os.system('cls')
-            print("—"*45)
-            print("|               !! ALERT !!                 |")
-            print("|            Input anda salah               |")
-            print("—"*45)
-            confirm = input("| Tekan [enter] untuk kembali ")
+            alert()
             Data_diri()
 
     def menu():
@@ -234,7 +252,7 @@ def menu_profile():
         print("|    1. Daftar | 2.Data Diri | 3.Kembali    |")
         print("|                                           |")
         print("—"*45)
-        pilihan_user = int(input("| Pilih menu : "))
+        pilihan_user = int(input("| Pilih menu ( 1 / 2 / 3 ) : "))
         if (pilihan_user == 1):
             # menu_daftar()
             Daftar()
@@ -245,11 +263,7 @@ def menu_profile():
             menu_utama()
         else:
             os.system('cls')
-            print("—"*45)
-            print("|               !! ALERT !!                 |")
-            print("|            Input anda salah               |")
-            print("—"*45)
-            confirm = input("| Tekan [enter] untuk kembali ")
+            alert()
             menu()
     menu()
 
@@ -405,7 +419,7 @@ def menu_rangking():
         print("|             5.Kembali                     |")
         print("|                                           |")
         print("—"*45)
-        pilihan_user = int(input("| Pilih Menu : "))
+        pilihan_user = int(input("| Pilih Menu ( 1 / 2 / 3 / 4 / 5 ) : "))
         if (pilihan_user == 1):
             show_data_tambah()
         elif (pilihan_user == 2):
@@ -418,11 +432,7 @@ def menu_rangking():
             menu_utama()
         else:
             os.system('cls')
-            print("—"*45)
-            print("|               !! ALERT !!                 |")
-            print("|            Input anda salah               |")
-            print("—"*45)
-            confirm = input("| Tekan [enter] untuk kembali ")
+            alert()
             menu()
     menu()
 
@@ -901,7 +911,7 @@ def menu_soal():
         print("|             5.Kembali                     |")
         print("|                                           |")
         print("—"*45)
-        pilihan_user = int(input("| Pilih Bab : "))
+        pilihan_user = int(input("| Pilih Bab ( 1 / 2 / 3 / 4 / 5 ) : "))
         if (pilihan_user == 1):
             soal_penjumlahan()
         elif (pilihan_user == 2):
@@ -932,7 +942,7 @@ def menu_utama():
     print("|   1. Profile | 2.Soal | 3.Rank | 4.Exit   |")
     print("|                                           |")
     print("—"*45)
-    pilihan_user = int(input("| Pilih menu : "))
+    pilihan_user = int(input("| Pilih menu ( 1 / 2 / 3 / 4 ) : "))
     if (pilihan_user == 1):
         menu_profile()
     elif (pilihan_user == 2):
@@ -953,11 +963,7 @@ def menu_utama():
         os.system('cls')
     else:
         os.system('cls')
-        print("—"*45)
-        print("|               !! ALERT !!                 |")
-        print("|            Input anda salah               |")
-        print("—"*45)
-        confirm = input("| Tekan [enter] untuk kembali ")
+        alert()
         menu_utama()
 
 menu_utama()
