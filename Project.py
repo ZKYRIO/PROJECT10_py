@@ -73,6 +73,9 @@ def menu_profile():
                 print("|                                           |")
                 print("|            Data tidak ditemukan           |")
                 print("|                                           |")
+                print("—"*45)
+                confirm = input("| Tekan[enter] untuk kembali ")
+                Data_diri()
             else:
                 print("—"*45)
                 for data in show_data:
@@ -112,7 +115,7 @@ def menu_profile():
                 print("—"*45)
                 confirm = input("| Tekan [enter] untuk kembali ")
                 os.system('cls')
-                menu()
+                Data_diri()
             else :
                 for data in show_data:
                     id_ = data[0]
@@ -180,7 +183,7 @@ def menu_profile():
                 print("—"*45)
                 confirm = input("| Tekan [enter] untuk kembali ")
                 os.system('cls')
-                menu()
+                Data_diri()
             
             else :
 
