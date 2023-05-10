@@ -25,10 +25,10 @@ def menu_profile():
         print("—"*45)
         print("╎              DAFTAR / LOGIN               ╎")
         print("—"*45)
-        username = input("| Masukkan Username Anda : ")
-        nama = str.capitalize(input("| Masukkan Nama Anda : "))
-        sex = str.capitalize(input("| Masukkan jenis kelamin anda (Pria / Wanita) : "))
-        school = str.upper(input("| Jenjang Sekolah (TK / SD) : "))
+        username = input("| Input Username Anda : ")
+        nama = str.capitalize(input("| Input Nama Anda : "))
+        sex = str.capitalize(input("| Input Gender Anda (Pria / Wanita) : "))
+        school = str.upper(input("| Input Jenjang Sekolah ('SD + KELAS' --> SD 5) : "))
         print("—"*45)
 
         # menyimpan sign up user ke database
@@ -280,7 +280,7 @@ def menu_rangking():
         print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nama,nilai_pertambahan FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pertambahan FROM data ORDER BY nilai_pertambahan DESC'
         cursor.execute(sql)
         show_data = cursor.fetchall()
 
@@ -314,7 +314,7 @@ def menu_rangking():
         print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nama,nilai_pengurangan FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pengurangan FROM data ORDER BY nilai_pengurangan DESC'
         cursor.execute(sql)
         show_data = cursor.fetchall()
 
@@ -348,7 +348,7 @@ def menu_rangking():
         print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nama,nilai_perkalian FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_perkalian FROM data ORDER BY nilai_perkalian DESC'
         cursor.execute(sql)
         show_data = cursor.fetchall()
 
@@ -382,7 +382,7 @@ def menu_rangking():
         print("—"*45)
         # perintah sql untuk menampilkan data id_user,username,dan nilai
         # kolom database harus bernama sesuai bab
-        sql = 'SELECT id_user,username,nama,nilai_pembagian FROM data'
+        sql = 'SELECT id_user,username,nama,nilai_pembagian FROM data ORDER BY nilai_pembagian DESC'
         cursor.execute(sql)
         show_data = cursor.fetchall()
 
